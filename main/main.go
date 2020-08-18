@@ -212,8 +212,6 @@ func FetchNoteHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
-		fmt.Print(token)
-		fmt.Print(err)
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 		return
@@ -330,6 +328,8 @@ func SearchNotesHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
+		fmt.Print(token)
+		fmt.Print(err)
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
