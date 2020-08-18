@@ -327,8 +327,8 @@ func SearchNotesHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusUnauthorized),
-			http.StatusUnauthorized)
+		http.Error(w, http.StatusText(http.StatusForbidden),
+			http.StatusForbidden)
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
