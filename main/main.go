@@ -36,7 +36,7 @@ type JSONWebKeys struct {
 ENVIRONMENT VARIABLES
 
 PORT
-AUTH0_DOMAIN (http://example.com/)
+AUTH0_DOMAIN (http://example.com)
 AUTH0_AUDIENCE
 INDEX_NAME
 */
@@ -114,7 +114,7 @@ func getPemCert(token *jwt.Token) (string, error) {
 	authDomain := os.Getenv("AUTH0_DOMAIN")
 
 	cert := ""
-	resp, err := http.Get(authDomain + ".well-known/jwks.json")
+	resp, err := http.Get(authDomain + "/.well-known/jwks.json")
 
 	if err != nil {
 		return cert, err
