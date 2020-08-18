@@ -146,13 +146,18 @@ func getPemCert(token *jwt.Token) (string, error) {
 //when the user makes a POST request to /notes/new_note endpoint.
 func PostNoteHandler(w http.ResponseWriter, r *http.Request) {
 	indexName := os.Getenv("INDEX_NAME")
+	bonsaiURL := os.Getenv("BONSAI_URL")
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
-	es, err := elasticsearch.NewDefaultClient()
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: []string{
+			bonsaiURL,
+		},
+	})
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError),
 			http.StatusInternalServerError)
@@ -203,13 +208,18 @@ func HandlerMux(w http.ResponseWriter, r *http.Request) {
 //when the user makes a GET request to /notes/{noteID} endpoint.
 func FetchNoteHandler(w http.ResponseWriter, r *http.Request) {
 	indexName := os.Getenv("INDEX_NAME")
+	bonsaiURL := os.Getenv("BONSAI_URL")
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
-	es, err := elasticsearch.NewDefaultClient()
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: []string{
+			bonsaiURL,
+		},
+	})
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError),
 			http.StatusInternalServerError)
@@ -241,13 +251,18 @@ func FetchNoteHandler(w http.ResponseWriter, r *http.Request) {
 //when the user makes a POST request to /notes/{noteID} endpoint.
 func UpdateNoteHandler(w http.ResponseWriter, r *http.Request) {
 	indexName := os.Getenv("INDEX_NAME")
+	bonsaiURL := os.Getenv("BONSAI_URL")
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
-	es, err := elasticsearch.NewDefaultClient()
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: []string{
+			bonsaiURL,
+		},
+	})
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError),
 			http.StatusInternalServerError)
@@ -277,13 +292,18 @@ func UpdateNoteHandler(w http.ResponseWriter, r *http.Request) {
 //when the user makes a DELETE request to /notes/{noteID} endpoint.
 func DeleteNoteHandler(w http.ResponseWriter, r *http.Request) {
 	indexName := os.Getenv("INDEX_NAME")
+	bonsaiURL := os.Getenv("BONSAI_URL")
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
-	es, err := elasticsearch.NewDefaultClient()
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: []string{
+			bonsaiURL,
+		},
+	})
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError),
 			http.StatusInternalServerError)
@@ -303,13 +323,18 @@ func DeleteNoteHandler(w http.ResponseWriter, r *http.Request) {
 //when the user makes a GET request to /notes/match_notes endpoint.
 func SearchNotesHandler(w http.ResponseWriter, r *http.Request) {
 	indexName := os.Getenv("INDEX_NAME")
+	bonsaiURL := os.Getenv("BONSAI_URL")
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
 	}
-	es, err := elasticsearch.NewDefaultClient()
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: []string{
+			bonsaiURL,
+		},
+	})
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusInternalServerError),
 			http.StatusInternalServerError)
