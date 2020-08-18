@@ -150,8 +150,9 @@ func PostNoteHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusUnauthorized),
+		http.Error(w, token+" "+err.Error(),
 			http.StatusUnauthorized)
+		return
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
@@ -258,6 +259,7 @@ func UpdateNoteHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
+		return
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
@@ -299,6 +301,7 @@ func DeleteNoteHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
+		return
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
@@ -328,10 +331,9 @@ func SearchNotesHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
-		fmt.Print(token)
-		fmt.Print(err)
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
+		return
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
