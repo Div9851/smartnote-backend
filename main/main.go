@@ -35,8 +35,11 @@ type JSONWebKeys struct {
 /*
 ENVIRONMENT VARIABLES
 
+--- set by Heroku ---
+BONSAI_URL
 PORT
-AUTH0_DOMAIN (http://example.com)
+--- set by me ---
+AUTH0_DOMAIN
 AUTH0_AUDIENCE
 INDEX_NAME
 */
