@@ -1,5 +1,7 @@
 module github.com/Div9851/smartnote-backend
 
+// +heroku goVersion go1.14
+
 go 1.14
 
 require (
