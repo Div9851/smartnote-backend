@@ -150,6 +150,11 @@ func SearchNotes(es *elasticsearch.Client, index string, userID string, searchTe
 						},
 					},
 				},
+				"filter": map[string]interface{}{
+					"term": map[string]interface{}{
+						"userID": userID,
+					},
+				},
 			},
 		},
 	})
