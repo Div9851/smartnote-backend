@@ -1,0 +1,19 @@
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "type": "kuromoji"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "userID": { "type": "keyword" },
+      "content": { "type": "text" },
+      "createdAt": { "type": "date" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

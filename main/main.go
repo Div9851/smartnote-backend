@@ -58,7 +58,7 @@ func main() {
 				return token, errors.New("invalid audience")
 			}
 			// Verify 'iss' claim
-			iss := authDomain
+			iss := authDomain + "/"
 			checkIss := token.Claims.(jwt.MapClaims).VerifyIssuer(iss, false)
 			if !checkIss {
 				return token, errors.New("invalid issuer")
