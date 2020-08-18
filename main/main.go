@@ -92,7 +92,7 @@ func getToken(r *http.Request) string {
 }
 
 func getUserID(tokenString string) (string, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		cert, err := getPemCert(token)
 		if err != nil {
 			return nil, err
@@ -103,11 +103,11 @@ func getUserID(tokenString string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	claims, ok := token.Claims.(*jwt.StandardClaims)
+	claims, ok := token.Claims.(jwt.MapClaims)
 	if !token.Valid || !ok {
 		return "", fmt.Errorf("token is invalid")
 	}
-	return claims.Subject, nil
+	return claims["sub"].(string), nil
 }
 
 func getPemCert(token *jwt.Token) (string, error) {
