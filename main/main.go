@@ -87,8 +87,8 @@ func main() {
 }
 
 func getToken(r *http.Request) string {
-	authHeaderParts := strings.Split(r.Header.Get("Authorization"), " ")
-	return authHeaderParts[1]
+	authHeader := r.Header.Get("Authorization")
+	return strings.TrimPrefix(authHeader, "Bearer ")
 }
 
 func getUserID(tokenString string) (string, error) {
@@ -212,8 +212,11 @@ func FetchNoteHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
+		fmt.Print(token)
+		fmt.Print(err)
 		http.Error(w, http.StatusText(http.StatusUnauthorized),
 			http.StatusUnauthorized)
+		return
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
@@ -327,8 +330,8 @@ func SearchNotesHandler(w http.ResponseWriter, r *http.Request) {
 	token := getToken(r)
 	userID, err := getUserID(token)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusForbidden),
-			http.StatusForbidden)
+		http.Error(w, http.StatusText(http.StatusUnauthorized),
+			http.StatusUnauthorized)
 	}
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
 		Addresses: []string{
