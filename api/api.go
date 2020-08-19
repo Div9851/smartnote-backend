@@ -141,12 +141,10 @@ func SearchNotes(es *elasticsearch.Client, index string, userID string, searchTe
 		"query": map[string]interface{}{
 			"bool": map[string]interface{}{
 				"must": map[string]interface{}{
-					"intervals": map[string]interface{}{
+					"match": map[string]interface{}{
 						"content": map[string]interface{}{
-							"match": map[string]interface{}{
-								"query":   searchText,
-								"ordered": true,
-							},
+							"query":            searchText,
+							"zero_terms_query": "all",
 						},
 					},
 				},
@@ -166,6 +164,7 @@ func SearchNotes(es *elasticsearch.Client, index string, userID string, searchTe
 		Body:  bytes.NewReader(reqBody),
 		From:  &from,
 		Size:  &size,
+		Sort:  []string{"updatedAt:desc"},
 	}
 	res, err := req.Do(context.Background(), es)
 	if err != nil {
